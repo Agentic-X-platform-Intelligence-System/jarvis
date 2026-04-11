@@ -1,0 +1,28 @@
+# Default install targets Python 3.11+ (including 3.13).
+# Coqui TTS (`TTS` on PyPI) does not currently publish wheels for Python 3.13; use Edge TTS by default,
+# or install Python 3.11 + optional `requirements-coqui.txt` if you want local Coqui models.
+
+anthropic>=0.40.0
+python-dotenv>=1.0.1
+
+# Audio
+sounddevice>=0.5.0
+numpy>=1.26.0
+scipy>=1.11.0
+
+# Wake word + STT
+pvporcupine>=3.0.2
+faster-whisper>=1.0.0
+
+# TTS (Edge voices via edge-tts; requires network for synthesis).
+# Decoding uses a bundled ffmpeg from imageio-ffmpeg (no MSVC / no system ffmpeg required).
+edge-tts>=6.1.10
+imageio-ffmpeg>=0.5.1
+
+# Skills
+duckduckgo-search>=6.1.0
+pyperclip>=1.8.2
+
+# Windows-only (master volume); install on other platforms only if you extend volume support
+pycaw>=20240210; platform_system == "Windows"
+comtypes>=1.4.0; platform_system == "Windows"

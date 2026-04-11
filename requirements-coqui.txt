@@ -1,0 +1,14 @@
+# Optional: local Coqui TTS (large download). As of early 2026, PyPI metadata for Coqui TTS 0.22.x
+# typically caps below Python 3.12. Use a Python 3.11 venv for the most reliable install:
+#
+#   py -3.11 -m venv .venv
+#   .venv\Scripts\activate
+#   pip install -r requirements-coqui.txt
+#
+# On Python 3.13+, prefer the default Edge TTS path (`pip install -r requirements.txt`).
+
+-r requirements.txt
+
+torch>=2.2.0
+torchaudio>=2.2.0
+TTS>=0.22.0,<0.23
