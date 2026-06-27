@@ -2,16 +2,26 @@
 
 Voice, ambient, and multimodal interface.
 
-## Legacy code (repo root — migrate here)
+## Owns
 
-| File | Purpose |
-|------|---------|
-| `main.py` | Voice loop entry |
-| `core/stt.py` | Speech-to-text |
-| `core/tts.py` | Text-to-speech |
-| `core/wake_word.py` | Wake word |
-| `core/audio.py` | Recording |
+| Module | Purpose |
+|--------|---------|
+| `aura/audio.py` | Microphone capture |
+| `aura/stt.py` | faster-whisper STT |
+| `aura/tts.py` | Edge / Coqui TTS |
+| `aura/wake_word.py` | Porcupine wake word |
 
-Depends on **stem** for LLM brain (`core/brain.py` → stem).
+## Entry
+
+- `apps/voice/main.py` — voice loop (wake → record → STT → brain → TTS)
+- `main.py` — legacy root shim
+
+## Legacy shims (temporary)
+
+| Shim | Canonical |
+|------|-----------|
+| `core/stt.py`, `tts.py`, `wake_word.py`, `audio.py` | `aura/` |
+
+Depends on **stem** for LLM brain (`stem/agent/brain.py`).
 
 **Roadmap:** P1 (voice), P8 (SaaS UI)
