@@ -32,15 +32,19 @@ full LLM loop on Google AI Studio's free Gemini tier via a LiteLLM proxy that ex
 Anthropic-compatible `/v1/messages` endpoint — no source changes:
 1. Provide `GEMINI_API_KEY` (free, no card: https://aistudio.google.com/apikey), available as an
    env var / secret.
-2. Start the proxy (not started by the update script): 
-   `.venv/bin/litellm --config scripts/litellm_gemini.yaml --port 4000`
+2. Start the proxy (not started by the update script):
+   `GEMINI_API_KEY=$GEMINI_API_KEY .venv/bin/litellm --config scripts/litellm_gemini.yaml --port 4000`
 3. Ensure `.env` (gitignored, recreate if missing) contains:
    ```
    ANTHROPIC_API_KEY=sk-local-litellm   # any non-empty value; proxy has no master_key
-   ANTHROPIC_BASE_URL=http://localhost:4000
    CLAUDE_MODEL=gemini-2.5-flash
    ```
-4. Run `python main.py --no-wake --once` (or the headless TTS->STT demo).
+4. **IMPORTANT:** export `ANTHROPIC_BASE_URL` as a real environment variable when running the app —
+   do NOT rely on putting it in `.env`. `stem/config/settings.py` uses pydantic-settings, which
+   reads `.env` into the Settings object but does NOT push values into `os.environ`; the `anthropic`
+   SDK reads `ANTHROPIC_BASE_URL` straight from `os.environ`. If it is only in `.env`, the SDK
+   silently calls the real Anthropic API (you'll get `invalid x-api-key`). Run with:
+   `ANTHROPIC_BASE_URL=http://localhost:4000 python main.py --no-wake --once`
 Health-check the proxy with `curl http://localhost:4000/health/readiness`. The proxy translates
 Anthropic tool definitions to Gemini function calls automatically.
 

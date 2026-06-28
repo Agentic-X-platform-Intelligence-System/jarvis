@@ -7,9 +7,13 @@
 #   .venv/bin/litellm --config scripts/litellm_gemini.yaml --port 4000
 #
 # Then in .env:
-#   ANTHROPIC_BASE_URL=http://localhost:4000
 #   ANTHROPIC_API_KEY=sk-local-litellm   # any non-empty value; proxy runs without master_key
 #   CLAUDE_MODEL=gemini-2.5-flash
+#
+# IMPORTANT: export ANTHROPIC_BASE_URL as a real env var when running the app (NOT just in .env);
+# pydantic-settings reads .env but does not populate os.environ, and the anthropic SDK reads
+# ANTHROPIC_BASE_URL from os.environ:
+#   ANTHROPIC_BASE_URL=http://localhost:4000 python main.py --no-wake --once
 model_list:
   - model_name: gemini-2.5-flash
     litellm_params:
