@@ -1,0 +1,16 @@
+{
+  "org": "Agentic-X-platform-Intelligence-System",
+  "repo": "Agentic-X-platform-Intelligence-System/jarvis",
+  "projectTitle": "AXIS/Jarvis Agile Board",
+  "projectNumber": null,
+  "projectUrl": "https://github.com/orgs/Agentic-X-platform-Intelligence-System/projects",
+  "views": [
+    "Backlog",
+    "Sprint Board",
+    "Roadmap",
+    "Learning Tracker"
+  ],
+  "status": "pending_setup",
+  "note": "Run scripts/agile/setup-github-project.ps1 after gh auth refresh -s read:project,project and write access to jarvis repo",
+  "manualSteps": "docs/GITHUB-PROJECTS.md"
+}

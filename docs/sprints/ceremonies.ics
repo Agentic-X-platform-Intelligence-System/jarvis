@@ -1,0 +1,56 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//AXIS//Jarvis Agile Ceremonies//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:AXIS Jarvis Sprint Ceremonies
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:axis-sprint-planning@jarvis
+DTSTAMP:20260628T103000Z
+DTSTART;TZID=Asia/Kolkata:20260707T090000
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:AXIS Sprint Planning (30 min)
+DESCRIPTION:Select stories from backlog. Set sprint goal. See docs/AGILE.md
+LOCATION:GitHub Project board
+END:VEVENT
+BEGIN:VEVENT
+UID:axis-backlog-refinement@jarvis
+DTSTAMP:20260628T103000Z
+DTSTART;TZID=Asia/Kolkata:20260703T180000
+RRULE:FREQ=WEEKLY;BYDAY=TH
+SUMMARY:AXIS Backlog Refinement (20 min)
+DESCRIPTION:Refine next sprint stories. Split large items. See docs/AGILE.md
+END:VEVENT
+BEGIN:VEVENT
+UID:axis-sprint-review@jarvis
+DTSTAMP:20260628T103000Z
+DTSTART;TZID=Asia/Kolkata:20260706T170000
+RRULE:FREQ=WEEKLY;BYDAY=SU
+SUMMARY:AXIS Sprint Review (20 min)
+DESCRIPTION:Demo completed stories. Update burndown in docs/sprints/
+END:VEVENT
+BEGIN:VEVENT
+UID:axis-sprint-retro@jarvis
+DTSTAMP:20260628T103000Z
+DTSTART;TZID=Asia/Kolkata:20260706T173000
+RRULE:FREQ=WEEKLY;BYDAY=SU
+SUMMARY:AXIS Sprint Retro (15 min)
+DESCRIPTION:Use docs/retro-template.md. Record velocity and learning.
+END:VEVENT
+BEGIN:VEVENT
+UID:axis-sprint1-kickoff@jarvis
+DTSTAMP:20260628T103000Z
+DTSTART;TZID=Asia/Kolkata:20260703T090000
+SUMMARY:Sprint 1 Kickoff — stem kernel
+DESCRIPTION:Goal: multi-provider LLM\, hybrid router\, Pydantic tools\, P1 tools (filesystem + shell/web). Stories S1.1–S1.5 (23 pts).
+END:VEVENT
+END:VCALENDAR

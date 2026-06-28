@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: AXIS Agile Guide
+    url: https://github.com/Agentic-X-platform-Intelligence-System/jarvis/blob/main/docs/AGILE.md
+    about: Sprint ceremonies, DoR/DoD, and workflow
+  - name: Master Scope
+    url: https://github.com/Agentic-X-platform-Intelligence-System/jarvis/blob/main/docs/STRUCTURE.md
+    about: Repo structure and sub-project layout
