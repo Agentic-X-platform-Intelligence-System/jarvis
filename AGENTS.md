@@ -26,10 +26,27 @@ provides the voice surface (STT/TTS/wake word). Other top-level dirs (`edith/`, 
 - No build step, no dev server, no database server (SQLite file auto-created under `data/`).
 - There is no configured linter (no ruff/flake8/black config, no CI workflows).
 
+### Running the LLM brain on a free Gemini backend (no Anthropic key)
+The brain uses the official `anthropic` SDK, which honors `ANTHROPIC_BASE_URL`. So you can run the
+full LLM loop on Google AI Studio's free Gemini tier via a LiteLLM proxy that exposes an
+Anthropic-compatible `/v1/messages` endpoint — no source changes:
+1. Provide `GEMINI_API_KEY` (free, no card: https://aistudio.google.com/apikey), available as an
+   env var / secret.
+2. Start the proxy (not started by the update script): 
+   `.venv/bin/litellm --config scripts/litellm_gemini.yaml --port 4000`
+3. Ensure `.env` (gitignored, recreate if missing) contains:
+   ```
+   ANTHROPIC_API_KEY=sk-local-litellm   # any non-empty value; proxy has no master_key
+   ANTHROPIC_BASE_URL=http://localhost:4000
+   CLAUDE_MODEL=gemini-2.5-flash
+   ```
+4. Run `python main.py --no-wake --once` (or the headless TTS->STT demo).
+Health-check the proxy with `curl http://localhost:4000/health/readiness`. The proxy translates
+Anthropic tool definitions to Gemini function calls automatically.
+
 ### Non-obvious caveats
-- The Claude brain hard-requires `ANTHROPIC_API_KEY`; without it `main.py` logs the error and
-  exits with code 2 before doing anything else. Set it in `.env` (or as a secret) to run the full
-  LLM loop.
+- The Claude brain hard-requires `ANTHROPIC_API_KEY` (any non-empty value when using the proxy);
+  without it `main.py` logs the error and exits with code 2 before doing anything else.
 - The VM is headless: there is no microphone or speaker, so the live wake-word/record/playback
   loop cannot capture or play audio. For end-to-end verification without hardware, drive the
   components directly (e.g. `aura.JarvisTTS.synthesize` -> WAV -> `aura.WhisperSTT.transcribe_file`)
