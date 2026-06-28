@@ -22,7 +22,9 @@ Jarvis (orchestrator)
 - Workspace map: [`../README.md`](../README.md)
 - Master scope: [`../agentic-ai-ideas/scope.md`](../agentic-ai-ideas/scope.md)
 - Repo structure: [`docs/STRUCTURE.md`](docs/STRUCTURE.md)
+- **Agile / sprints:** [`docs/AGILE.md`](docs/AGILE.md)
 - GitHub org setup: [`docs/GITHUB.md`](docs/GITHUB.md)
+- GitHub Projects: [`docs/GITHUB-PROJECTS.md`](docs/GITHUB-PROJECTS.md)
 
 ## Install
 
@@ -46,7 +48,7 @@ python main.py --no-wake --once
 ## Git remote
 
 ```bash
-git remote set-url origin https://github.com/<AXIS-ORG-SLUG>/jarvis.git
+git remote set-url origin https://github.com/Agentic-X-platform-Intelligence-System/jarvis.git
 ```
 
 See [docs/GITHUB.md](docs/GITHUB.md) — org slug required before push.

@@ -45,4 +45,10 @@ Each sub-project folder has a `README.md` with scope and roadmap mapping.
 
 ## GitHub
 
-See [GITHUB.md](GITHUB.md) for org remote setup (placeholder slug).
+See [GITHUB.md](GITHUB.md) for org remote setup.
+
+## Agile
+
+- Operating guide: [AGILE.md](AGILE.md)
+- Sprint tracking: [sprints/](sprints/)
+- Setup scripts: [scripts/agile/](../scripts/agile/)
