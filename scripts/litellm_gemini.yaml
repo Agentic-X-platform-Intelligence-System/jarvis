@@ -1,0 +1,26 @@
+# LiteLLM proxy config: exposes an Anthropic-compatible /v1/messages endpoint
+# backed by Google AI Studio (Gemini). This lets the JARVIS brain (which uses the
+# Anthropic SDK) run on Gemini's free tier with NO source changes.
+#
+# Usage:
+#   export GEMINI_API_KEY=<your Google AI Studio key>   # from https://aistudio.google.com/apikey
+#   .venv/bin/litellm --config scripts/litellm_gemini.yaml --port 4000
+#
+# Then in .env:
+#   ANTHROPIC_API_KEY=sk-local-litellm   # any non-empty value; proxy runs without master_key
+#   CLAUDE_MODEL=gemini-2.5-flash
+#
+# IMPORTANT: export ANTHROPIC_BASE_URL as a real env var when running the app (NOT just in .env);
+# pydantic-settings reads .env but does not populate os.environ, and the anthropic SDK reads
+# ANTHROPIC_BASE_URL from os.environ:
+#   ANTHROPIC_BASE_URL=http://localhost:4000 python main.py --no-wake --once
+model_list:
+  - model_name: gemini-2.5-flash
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+  # Fallback alias so the repo's default model name also routes to Gemini.
+  - model_name: claude-sonnet-4-20250514
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
