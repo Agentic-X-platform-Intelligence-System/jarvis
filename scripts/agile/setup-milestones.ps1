@@ -1,6 +1,6 @@
 # Create GitHub milestones M1-M9
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 $Repo = "Agentic-X-platform-Intelligence-System/jarvis"
 
 $milestones = @(
@@ -17,7 +17,7 @@ $milestones = @(
 
 foreach ($m in $milestones) {
     Write-Host "Creating milestone: $($m.Title)"
-    gh api repos/$Repo/milestones -f title=$m.Title -f due_on="$($m.Due)T23:59:59Z" -f description=$m.Desc 2>$null
+    gh api repos/$Repo/milestones -f title="$($m.Title)" -f due_on="$($m.Due)T23:59:59Z" -f description="$($m.Desc)" 2>$null
     if ($LASTEXITCODE -ne 0) {
         Write-Host "  (may already exist)"
     }

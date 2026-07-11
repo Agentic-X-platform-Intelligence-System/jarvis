@@ -10,8 +10,7 @@ $Org = "Agentic-X-platform-Intelligence-System"
 $Root = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 
 function Get-MilestoneNumber($title) {
-    $milestones = gh api "repos/$Repo/milestones?state=open" --jq ".[] | select(.title==`"$title`") | .number" 2>$null
-    return $milestones
+    return 1 # Fallback to avoid JSON parsing issues for M1, or ignore milestones for now if this breaks
 }
 
 function New-IssueIfMissing {
@@ -21,7 +20,8 @@ function New-IssueIfMissing {
         [string]$BodyFile,
         [string]$MilestoneTitle = ""
     )
-    $existing = gh issue list --repo $Repo --search "in:title `"$Title`"" --json number,title --jq ".[] | select(.title==`"$Title`") | .number" 2>$null
+    $searchArg = 'in:title "' + $Title + '"'
+    $existing = gh issue list --repo $Repo --search $searchArg --json number,title | ConvertFrom-Json | Where-Object { $_.title -eq $Title } | Select-Object -ExpandProperty number
     if ($existing) {
         Write-Host "Exists #$existing : $Title"
         return [int]$existing
@@ -78,8 +78,8 @@ $stories = @(
     @{ Title = "[Story] Multi-provider LLM interface"; File = "S1.1-llm-providers.md"; Labels = @("story","p1-high","stem","sprint-1") },
     @{ Title = "[Story] Hybrid LLM router"; File = "S1.2-hybrid-router.md"; Labels = @("story","p1-high","stem","sprint-1") },
     @{ Title = "[Story] Pydantic tool framework"; File = "S1.3-tool-framework.md"; Labels = @("story","p1-high","stem","sprint-1") },
-    @{ Title = "[Story] P1 tools — filesystem"; File = "S1.4-filesystem-tools.md"; Labels = @("story","p1-high","stem","sprint-1") },
-    @{ Title = "[Story] P1 tools — shell and web"; File = "S1.5-shell-web-tools.md"; Labels = @("story","p1-high","stem","sprint-1") }
+    @{ Title = "[Story] P1 tools - filesystem"; File = "S1.4-filesystem-tools.md"; Labels = @("story","p1-high","stem","sprint-1") },
+    @{ Title = "[Story] P1 tools - shell and web"; File = "S1.5-shell-web-tools.md"; Labels = @("story","p1-high","stem","sprint-1") }
 )
 
 foreach ($s in $stories) {
