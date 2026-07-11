@@ -1,15 +1,15 @@
-﻿{
-    "org":  "Agentic-X-platform-Intelligence-System",
-    "projectTitle":  "AXIS/Jarvis Agile Board",
-    "manualSteps":  "See docs/GITHUB-PROJECTS.md for view and field configuration",
-    "projectUrl":  "https://github.com/orgs/Agentic-X-platform-Intelligence-System/projects/2",
-    "repo":  "Agentic-X-platform-Intelligence-System/jarvis",
-    "projectNumber":  2,
-    "views":  [
-                  "Backlog",
-                  "Sprint Board",
-                  "Roadmap",
-                  "Learning Tracker"
-              ],
-    "configuredAt":  "2026-06-28"
+{
+  "org": "Agentic-X-platform-Intelligence-System",
+  "repo": "Agentic-X-platform-Intelligence-System/jarvis",
+  "projectTitle": "AXIS/Jarvis Agile Board",
+  "projectNumber": 2,
+  "projectUrl": "https://github.com/orgs/Agentic-X-platform-Intelligence-System/projects/2",
+  "views": [
+    "Backlog",
+    "Sprint Board",
+    "Roadmap",
+    "Learning Tracker"
+  ],
+  "configuredAt": "2026-06-28",
+  "manualSteps": "See docs/GITHUB-PROJECTS.md for view and field configuration"
 }
