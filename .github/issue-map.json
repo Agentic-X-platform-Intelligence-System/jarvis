@@ -1,0 +1,15 @@
+﻿{
+    "sprint1Epic":  2,
+    "epics":  {
+                  "Epic 7: P6 - Kinetix Dev Crew":  8,
+                  "Epic 4: P3 - Karen Code Review Bot":  5,
+                  "Epic 2: P1 - Aura Voice Migration":  3,
+                  "Epic 9: P8 - Full-Stack AI SaaS":  10,
+                  "Epic 3: P2 - Edith RAG Knowledge Base":  4,
+                  "Epic 6: P5 - Cognis Java Migrator":  7,
+                  "Epic 1: P1 - stem Kernel \u0026 Jarvis CLI":  2,
+                  "Epic 5: P4 - Friday Research Agent":  6,
+                  "Epic 8: P7 - Aero Production API":  9
+              },
+    "createdAt":  "2026-06-28"
+}

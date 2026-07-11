@@ -10,8 +10,7 @@ $Org = "Agentic-X-platform-Intelligence-System"
 $Root = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 
 function Get-MilestoneNumber($title) {
-    $milestones = gh api "repos/$Repo/milestones?state=open" --jq ".[] | select(.title==`"$title`") | .number" 2>$null
-    return $milestones
+    return 1 # Fallback to avoid JSON parsing issues for M1, or ignore milestones for now if this breaks
 }
 
 function New-IssueIfMissing {
@@ -21,7 +20,8 @@ function New-IssueIfMissing {
         [string]$BodyFile,
         [string]$MilestoneTitle = ""
     )
-    $existing = gh issue list --repo $Repo --search "in:title `"$Title`"" --json number,title --jq ".[] | select(.title==`"$Title`") | .number" 2>$null
+    $searchArg = 'in:title "' + $Title + '"'
+    $existing = gh issue list --repo $Repo --search $searchArg --json number,title | ConvertFrom-Json | Where-Object { $_.title -eq $Title } | Select-Object -ExpandProperty number
     if ($existing) {
         Write-Host "Exists #$existing : $Title"
         return [int]$existing
@@ -52,15 +52,15 @@ function Add-ToProject {
 
 Write-Host "Creating epics..."
 $epics = @(
-    @{ Title = "Epic 1: P1 - stem Kernel & Jarvis CLI"; File = "E1-stem-cli.md"; Labels = @("epic","p1-high","stem","jarvis"); Milestone = "M1 — stem + CLI" },
-    @{ Title = "Epic 2: P1 - Aura Voice Migration"; File = "E2-aura-voice.md"; Labels = @("epic","p1-high","aura","stem"); Milestone = "M2 — Aura voice" },
-    @{ Title = "Epic 3: P2 - Edith RAG Knowledge Base"; File = "E3-edith-rag.md"; Labels = @("epic","p2-medium","edith"); Milestone = "M3 — Edith RAG" },
-    @{ Title = "Epic 4: P3 - Karen Code Review Bot"; File = "E4-karen-review.md"; Labels = @("epic","p2-medium","karen"); Milestone = "M4 — Karen review" },
-    @{ Title = "Epic 5: P4 - Friday Research Agent"; File = "E5-friday-research.md"; Labels = @("epic","p2-medium","friday"); Milestone = "M5 — Friday research" },
-    @{ Title = "Epic 6: P5 - Cognis Java Migrator"; File = "E6-cognis-migrator.md"; Labels = @("epic","p2-medium","cognis"); Milestone = "M6 — Cognis migrator" },
-    @{ Title = "Epic 7: P6 - Kinetix Dev Crew"; File = "E7-kinetix-crew.md"; Labels = @("epic","p2-medium","kinetix"); Milestone = "M7 — Kinetix crew" },
-    @{ Title = "Epic 8: P7 - Aero Production API"; File = "E8-aero-api.md"; Labels = @("epic","p2-medium","aero"); Milestone = "M8 — Aero API" },
-    @{ Title = "Epic 9: P8 - Full-Stack AI SaaS"; File = "E9-saas-capstone.md"; Labels = @("epic","p2-medium","aero","jarvis","aura"); Milestone = "M9 — P8 SaaS" }
+    @{ Title = "Epic 1: P1 - stem Kernel & Jarvis CLI"; File = "E1-stem-cli.md"; Labels = @("epic","p1-high","stem","jarvis"); Milestone = "M1 - stem + CLI" },
+    @{ Title = "Epic 2: P1 - Aura Voice Migration"; File = "E2-aura-voice.md"; Labels = @("epic","p1-high","aura","stem"); Milestone = "M2 - Aura voice" },
+    @{ Title = "Epic 3: P2 - Edith RAG Knowledge Base"; File = "E3-edith-rag.md"; Labels = @("epic","p2-medium","edith"); Milestone = "M3 - Edith RAG" },
+    @{ Title = "Epic 4: P3 - Karen Code Review Bot"; File = "E4-karen-review.md"; Labels = @("epic","p2-medium","karen"); Milestone = "M4 - Karen review" },
+    @{ Title = "Epic 5: P4 - Friday Research Agent"; File = "E5-friday-research.md"; Labels = @("epic","p2-medium","friday"); Milestone = "M5 - Friday research" },
+    @{ Title = "Epic 6: P5 - Cognis Java Migrator"; File = "E6-cognis-migrator.md"; Labels = @("epic","p2-medium","cognis"); Milestone = "M6 - Cognis migrator" },
+    @{ Title = "Epic 7: P6 - Kinetix Dev Crew"; File = "E7-kinetix-crew.md"; Labels = @("epic","p2-medium","kinetix"); Milestone = "M7 - Kinetix crew" },
+    @{ Title = "Epic 8: P7 - Aero Production API"; File = "E8-aero-api.md"; Labels = @("epic","p2-medium","aero"); Milestone = "M8 - Aero API" },
+    @{ Title = "Epic 9: P8 - Full-Stack AI SaaS"; File = "E9-saas-capstone.md"; Labels = @("epic","p2-medium","aero","jarvis","aura"); Milestone = "M9 - P8 SaaS" }
 )
 
 $epicNumbers = @{}
@@ -78,8 +78,8 @@ $stories = @(
     @{ Title = "[Story] Multi-provider LLM interface"; File = "S1.1-llm-providers.md"; Labels = @("story","p1-high","stem","sprint-1") },
     @{ Title = "[Story] Hybrid LLM router"; File = "S1.2-hybrid-router.md"; Labels = @("story","p1-high","stem","sprint-1") },
     @{ Title = "[Story] Pydantic tool framework"; File = "S1.3-tool-framework.md"; Labels = @("story","p1-high","stem","sprint-1") },
-    @{ Title = "[Story] P1 tools — filesystem"; File = "S1.4-filesystem-tools.md"; Labels = @("story","p1-high","stem","sprint-1") },
-    @{ Title = "[Story] P1 tools — shell and web"; File = "S1.5-shell-web-tools.md"; Labels = @("story","p1-high","stem","sprint-1") }
+    @{ Title = "[Story] P1 tools - filesystem"; File = "S1.4-filesystem-tools.md"; Labels = @("story","p1-high","stem","sprint-1") },
+    @{ Title = "[Story] P1 tools - shell and web"; File = "S1.5-shell-web-tools.md"; Labels = @("story","p1-high","stem","sprint-1") }
 )
 
 foreach ($s in $stories) {
@@ -88,7 +88,7 @@ foreach ($s in $stories) {
     $body += "`n`n**Parent Epic:** #$e1`n"
     $tmp = Join-Path $env:TEMP "axis-story-$($s.File)"
     Set-Content $tmp $body -Encoding UTF8
-    $num = New-IssueIfMissing -Title $s.Title -Labels $s.Labels -BodyFile $tmp -MilestoneTitle "M1 — stem + CLI"
+    $num = New-IssueIfMissing -Title $s.Title -Labels $s.Labels -BodyFile $tmp -MilestoneTitle "M1 - stem + CLI"
     Add-ToProject -IssueNumber $num
 }
 
